@@ -164,18 +164,18 @@
     } finally {
       console.log("You reached the end of Step 3. This will always print.");
     }
-    
+
+    //Step 5
+
     errorBtns[10].addEventListener('click', () =>  {
 
-      throw new InputError("test global erroring functionality");
+      window.onerror = function (msg, url, lineNo, columnNo, error) {
+       console.log("This a Global Error Function");
+      };
+      throw new InputError("Testing Global Error");
 
-      if(window.onerror){
-        console.log('An error occured :(');
-      }
-
+      TrackJS.track('Testing TrackJS!');
     });
-
-    TrackJS.track('Testing TrackJS!');
   </script>
                           
 </body>
