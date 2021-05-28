@@ -55,6 +55,13 @@
     <button>Trigger a Global Error</button>
   </section>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "179e25e5f02c4d0f984c9d62842b1d35"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
   <script>
     let calculateBtn = document.querySelector('#calculate');
     calculateBtn.addEventListener('click', () => {
@@ -67,6 +74,109 @@
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
     // TODO - Make buttons functional
+
+    //Step 2
+
+    errorBtns[0].addEventListener('click', () => {
+      console.log('Console log demo.');
+    })
+  
+    errorBtns[1].addEventListener('click', () => {
+      console.error('This is not the button you are looking for.');
+    })
+
+    errorBtns[2].addEventListener('click', () => {
+      console.dir(document.head);
+    });
+
+    errorBtns[3].addEventListener('click', () => {
+      console.dirxml(document.body);
+    })
+
+    const label = 'Example Console Group';
+
+    errorBtns[4].addEventListener('click', () => {
+      console.group(label);
+      console.info('Hello');
+      console.info('How');
+      console.info('Ya');
+      console.info('Doing?');
+    });
+
+    errorBtns[5].addEventListener('click', () => {
+      console.groupEnd();
+    });
+
+    const arr = ["Hi", "I'm", "Brian"];
+    errorBtns[6].addEventListener('click', () => {
+     console.table(arr);
+    });
+
+    errorBtns[7].addEventListener('click', () => {
+      console.time();
+      console.log('Timer Started');
+    });
+
+    errorBtns[8].addEventListener('click', () => {
+      console.log('Timer Ended');
+      console.timeEnd();
+    });
+
+    errorBtns[9].addEventListener('click', () => {
+      const testing = () => { one(); };
+      const one = () => { two(); };
+      const two = () => { three(); };
+      const three = () => { console.trace(); };
+      testing();
+    });
+
+    // Step 4
+
+    // Custom Error Class
+    class InputError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "InputError";
+      }
+    }
+
+    // Function that will throw the error
+    function errorTesting() {
+      throw new InputError("I have brought peace, freedom, justice, and security to my new empire");
+    }
+    
+    //Step 3
+
+    try{
+      errorTesting();
+    } catch (err) {
+
+      console.log(err.message);
+      try{
+        if (err instanceof InputError){
+          console.log("Catch - Your new empire?");
+          throw new InputError("That was an InputError");
+          console.log("Throwing another InputError");
+        }
+      } catch (newErr){
+        console.log("We caught the input error again");
+      }
+    } finally {
+      console.log("You reached the end of Step 3. This will always print.");
+    }
+    
+    errorBtns[10].addEventListener('click', () =>  {
+
+      throw new InputError("test global erroring functionality");
+
+      if(window.onerror){
+        console.log('An error occured :(');
+      }
+
+    });
+
+    TrackJS.track('Testing TrackJS!');
   </script>
+                          
 </body>
 </html>
